@@ -109,7 +109,6 @@ require("nvim-treesitter.configs").setup {
   highlight = { enable = true },
 }
 
-
 -- Keybindings
 
 vim.g.mapleader = ";"
@@ -127,6 +126,22 @@ vim.keymap.set("n", "<C-j>", "35j", opts)
 vim.keymap.set("n", "<C-k>", "35k", opts)
 
 vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", opts)
+
+vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", { noremap = true })
+
+vim.keymap.set('n', 'ZZ', function()
+  vim.cmd('wall')
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == 'terminal' then
+      local job = vim.b[buf].terminal_job_id
+      if job then vim.fn.jobstop(job) end
+    end
+  end
+  vim.cmd('qa!')
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<C-v><C-d>", ":source ~/.local/sessions/zvm.vim<CR>", opts)
+vim.keymap.set("n", "<C-v><C-n>", ":source ~/.local/sessions/nvim.vim<CR>", opts)
 
 -- Telescope keymap
 vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {})

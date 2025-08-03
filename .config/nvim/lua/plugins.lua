@@ -113,5 +113,25 @@ lspconfig.zls.setup({
   capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
 
-
+require("nvim-tree").setup {
+  view = {
+    width = 30,
+    side = "left",
+    preserve_window_proportions = true,  -- <-- keep proportions stable
+    adaptive_size = false,                 -- <-- disable dynamic resizing
+  },
+  actions = {
+    open_file = {
+      quit_on_open = false,   -- don't close tree on file open
+      resize_window = false,  -- IMPORTANT: prevent window resize on file open
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  update_focused_file = {
+    enable = true,
+    update_root = true,
+  },
+}
 
